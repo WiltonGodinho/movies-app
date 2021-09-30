@@ -2,16 +2,17 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import api from '../api'
 
-const Item = ({ name } )=> {
+const Item = ({ movie } )=> {
   return(
-  <View>
-    <Text>{name}</Text>
+  <View style={styles.listItem}>
+    <Text>{movie.name}</Text>
+    <Text>{movie.rating}</Text>
   </View>
   )
 }
 
 const renderItem = ({ item }) => (
-  <Item name={item.name} />
+  <Item movie={item} />
 )
 
 
@@ -22,6 +23,7 @@ const HomeScreen = ({ navigation }) => {
     try{
       const resp = await api.getAllMovies()
       const m = resp?.data?.data ?? []
+      console.log('movies ',  movies)
       setMovies(m)
     }
     catch (ex){
@@ -52,4 +54,8 @@ const HomeScreen = ({ navigation }) => {
       alignItems: 'center',
       justifyContent: 'center',
     },
+    listItem : {
+      flexDirection: "row",
+      justifyContent: "space-evenly"
+    }
   });
