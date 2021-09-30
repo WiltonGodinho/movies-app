@@ -1,6 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
 import api from '../api'
+
+const Item = ({ name } )=> {
+  return(
+  <View>
+    <Text>{name}</Text>
+  </View>
+  )
+}
+
+const renderItem = ({ item }) => (
+  <Item name={item.name} />
+)
+
 
 const HomeScreen = ({ navigation }) => {
   const [movies, setMovies] = useState([])
@@ -22,7 +35,9 @@ const HomeScreen = ({ navigation }) => {
   
     return (
           <View style={styles.container}>
-            <Text>{movies.length && movies[0] && movies[0].name} </Text>
+            <FlatList data={movies} 
+              renderItem={renderItem}
+            />
             <Button title="Details" onPress={() => navigation.navigate('Details')} />
           </View>
     );
